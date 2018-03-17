@@ -9,9 +9,9 @@ struct bitmap {
   int *data;
 };
 
-struct bitmap * bitmap_create( int w, int h )
+bitmap*  bitmap_create( int w, int h )
 {
-  struct bitmap *m;
+  bitmap* m;
 
   m = malloc(sizeof *m);
   if(!m) return 0;
@@ -28,13 +28,13 @@ struct bitmap * bitmap_create( int w, int h )
   return m;
 }
 
-void bitmap_delete( struct bitmap *m )
+void bitmap_delete( bitmap* m )
 {
   free(m->data);
   free(m);
 }
 
-void bitmap_reset( struct bitmap *m, int value )
+void bitmap_reset( bitmap* m, int value )
 {
   int i;
   for(i=0;i<(m->width*m->height);i++) {
@@ -42,7 +42,7 @@ void bitmap_reset( struct bitmap *m, int value )
   }
 }
 
-int bitmap_get( struct bitmap *m, int x, int y )
+int bitmap_get( bitmap* m, int x, int y )
 {
   while(x>=m->width)  x-=m->width;
   while(y>=m->height) y-=m->height;
@@ -52,7 +52,7 @@ int bitmap_get( struct bitmap *m, int x, int y )
   return m->data[y*m->width+x];
 }
 
-void bitmap_set( struct bitmap *m, int x, int y, int value )
+void bitmap_set( bitmap* m, int x, int y, int value )
 {
   while(x>=m->width)  x-=m->width;
   while(y>=m->height) y-=m->height;
@@ -62,17 +62,17 @@ void bitmap_set( struct bitmap *m, int x, int y, int value )
   m->data[y*m->width+x] = value;
 }
 
-int bitmap_width( struct bitmap *m )
+int bitmap_width( bitmap* m )
 {
   return m->width;
 }
 
-int bitmap_height( struct bitmap *m )
+int bitmap_height( bitmap* m )
 {
   return m->height;
 }
 
-int * bitmap_data( struct bitmap *m )
+int * bitmap_data( bitmap* m )
 {
   return m->data;
 }
@@ -97,7 +97,7 @@ struct bmp_header {
   int  icolors;
 };
 
-int bitmap_save( struct bitmap *m, const char *path )
+int bitmap_save( bitmap* m, const char *path )
 {
   FILE *file;
   struct bmp_header header;
@@ -148,11 +148,12 @@ int bitmap_save( struct bitmap *m, const char *path )
   return 1;
 }
 
-struct bitmap * bitmap( const char *path )
+/*
+bitmap* bitmap( const char *path )
 {
   FILE *file;
   int size;
-  struct bitmap *m;
+  bitmap* m;
   struct bmp_header header;
   int i;
 
@@ -195,3 +196,5 @@ struct bitmap * bitmap( const char *path )
   fclose(file);
   return m;
 }
+*/
+

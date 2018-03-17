@@ -1,6 +1,8 @@
 #ifndef BITMAP_H
 #define BITMAP_H
 
+typedef struct bitmap bitmap;
+
 struct bitmap * bitmap_create( int w, int h );
 void            bitmap_delete( struct bitmap *b );
 struct bitmap * bitmap_load( const char *file );
