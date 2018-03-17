@@ -171,6 +171,7 @@ void spawn_children( options_t options )
       mandel.file_name = calloc( sizeof( char ), 2048 );
       sprintf( mandel.file_name, options.file_name, remaining );
 
+      mandel.pid = remaining;
       mandel.x_min = options.x_center - scale;
       mandel.x_max = options.x_center + scale;
       mandel.y_min = options.y_center - scale;
@@ -181,7 +182,7 @@ void spawn_children( options_t options )
       exit( 0 );
     }
 
-    printf( "Started %d\n", remaining );
+    printf( "[%d] Started %d\n", getpid(), remaining );
     fflush( stdout );
 
     // => we're in the parent, so continue dispatching new images
@@ -197,6 +198,8 @@ void spawn_children( options_t options )
     }
   }
 
+  // wait for any stragglers
+  while ( wait( NULL ) > 0 );
 }
 
 /**
@@ -248,7 +251,7 @@ void mandelbrot_compute( mandelbrot_t* this )
     return;
   }
 
-  printf( "Finished %d\n", this->pid );
+  printf( "[%d] Finished %d\n", getpid(), this->pid );
   fflush( stdout );
 }
 
