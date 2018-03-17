@@ -12,20 +12,21 @@ void compute_image( struct bitmap *bm, double xmin, double xmax, double ymin, do
 
 void show_help()
 {
-  printf("Use: mandel [options]\n");
-  printf("Where options are:\n");
-  printf("-m <max>    The maximum number of iterations per point. (default=1000)\n");
-  printf("-x <coord>  X coordinate of image center point. (default=0)\n");
-  printf("-y <coord>  Y coordinate of image center point. (default=0)\n");
-  printf("-s <scale>  Scale of the image in Mandlebrot coordinates. (default=4)\n");
-  printf("-W <pixels> Width of the image in pixels. (default=500)\n");
-  printf("-H <pixels> Height of the image in pixels. (default=500)\n");
-  printf("-o <file>   Set output file. (default=mandel.bmp)\n");
-  printf("-h          Show this help text.\n");
-  printf("\nSome examples are:\n");
-  printf("mandel -x -0.5 -y -0.5 -s 0.2\n");
-  printf("mandel -x -.38 -y -.665 -s .05 -m 100\n");
-  printf("mandel -x 0.286932 -y 0.014287 -s .0005 -m 1000\n\n");
+  printf( "Use: mandel [options]\n" );
+  printf( "Where options are:\n" );
+  printf( "-m <max>    The maximum number of iterations per point. (default=1000)\n" );
+  printf( "-x <coord>  X coordinate of image center point. (default=0)\n" );
+  printf( "-y <coord>  Y coordinate of image center point. (default=0)\n" );
+  printf( "-s <scale>  Scale of the image in Mandlebrot coordinates. (default=4)\n ");
+  printf( "-W <pixels> Width of the image in pixels. (default=500)\n ");
+  printf( "-H <pixels> Height of the image in pixels. (default=500)\n ");
+  printf( "-o <file>   Set output file. (default=mandel.bmp)\n ");
+  printf( "-h          Show this help text.\n ");
+  printf( "\n" );
+  printf( "Some examples are:\n" );
+  printf( "mandel -x -0.5 -y -0.5 -s 0.2\n" );
+  printf( "mandel -x -.38 -y -.665 -s .05 -m 100\n" );
+  printf( "mandel -x 0.286932 -y 0.014287 -s .0005 -m 1000\n\n" );
 }
 
 int main( int argc, char *argv[] )
