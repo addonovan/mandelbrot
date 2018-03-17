@@ -1,14 +1,46 @@
+PRODUCT := mandel mandelseries
 
-all: mandel
+BIN 	:= bin
+OBJ 	:= obj
+SRC 	:= src
+INC 	:= include
 
-mandel: mandel.o bitmap.o
-	gcc mandel.o bitmap.o -o mandel -lpthread
+CC	:= gcc
+INCDIRS := -I$(INC)
+CFLAGS	:= -Wall -Wextra -Werror -lpthread -g
 
-mandel.o: mandel.c
-	gcc -Wall -g -c mandel.c -o mandel.o
+SRCS 	:= $(wildcard $(SRC)/*.c)
+MAINS 	:= $(patsubst %, $(SRC)/%.c, $(PRODUCT))
+SRCS 	:= $(filter-out $(MAINS), $(SRCS))
+OBJS 	:= $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 
-bitmap.o: bitmap.c
-	gcc -Wall -g -c bitmap.c -o bitmap.o
+all: mkdirs $(PRODUCT)
+
+################################################################################
+# EXECUTABLES                                                                  #
+################################################################################
+
+$(PRODUCT): $(OBJS)
+	$(CC) $(CFLAGS) $(INCDIRS) $^ $(SRC)/$@.c -o $(BIN)/$@
+
+################################################################################
+# SHARED OBJECTS                                                               #
+################################################################################
+
+$(OBJ)/%.o: $(SRCS)
+	$(CC) $(CFLAGS) $(INCDIRS) -c $< -o $@
+
+################################################################################
+# PHONEY RULES                                                                 #
+################################################################################
+
+mkdirs:
+	@mkdir -p obj
+	@mkdir -p bin
+.PHONY: mkdirs
 
 clean:
-	rm -f mandel.o bitmap.o mandel
+	rm obj/*
+	rm bin/*
+.PHONY: clean
+
