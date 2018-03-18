@@ -144,7 +144,7 @@ void spawn_children( options_t options )
   int remaining = 50;
   int active = 0;
   double scale = 2.0;
-  double step = ( 2.0 - options.scale ) / remaining;
+  double step = ( scale - options.scale ) / ( remaining - 1 ); // fencepost problem
 
   mandelbrot_t mandel;
   mandel.bm = bitmap_create( options.image_width, options.image_height );
@@ -180,6 +180,7 @@ void spawn_children( options_t options )
     }
 
     // => we're in the parent, so continue dispatching new images
+    printf( "#%d @ s = %lf\n", remaining, scale );
     scale -= step;
     active++;
 
