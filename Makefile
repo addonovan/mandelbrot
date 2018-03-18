@@ -7,7 +7,7 @@ INC 	:= include
 
 CC	:= gcc
 INCDIRS := -I$(INC)
-CFLAGS	:= -Wall -Wextra -Werror -lpthread -g
+CFLAGS	:= -Wall -Wextra -Werror -pthread -g
 
 SRCS 	:= $(wildcard $(SRC)/*.c)
 MAINS 	:= $(patsubst %, $(SRC)/%.c, $(PRODUCT))
