@@ -179,9 +179,6 @@ void spawn_children( options_t options )
       exit( 0 );
     }
 
-    printf( "[%d] Started %d\n", getpid(), remaining );
-    fflush( stdout );
-
     // => we're in the parent, so continue dispatching new images
     scale -= step;
     active++;
@@ -248,7 +245,6 @@ void mandelbrot_compute( mandelbrot_t* this )
     return;
   }
 
-  printf( "[%d] Finished %d\n", getpid(), this->pid );
   fflush( stdout );
 }
 
