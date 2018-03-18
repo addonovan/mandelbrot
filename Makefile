@@ -19,7 +19,7 @@ OBJS 	:= $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 X 	:= -x -0.235125
 Y 	:= -y  0.827215
 SCALE 	:= -s  0.000004
-ITERS 	:= -m 500
+ITERS 	:= -m 1000
 WIDTH 	:= -W 1024
 HEIGHT 	:= -H 1024
 OUTPUT 	:= -o $(OUT)/mandel.bmp
@@ -45,7 +45,7 @@ $(PRODUCT): $(OBJS)
 # SHARED OBJECTS                                                               #
 ################################################################################
 
-$(OBJ)/%.o: $(SRCS)
+$(OBJ)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) $(INCDIRS) -c $< -o $@
 
 ################################################################################
@@ -58,7 +58,9 @@ mkdirs:
 .PHONY: mkdirs
 
 clean:
-	rm obj/*
-	rm bin/*
+	@rm -rf $(OBJ)
+	@rm -rf $(BIN)
+	@mkdir -p $(OBJ)
+	@mkdir -p $(BIN)
 .PHONY: clean
 
