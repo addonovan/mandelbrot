@@ -15,6 +15,7 @@ MAINS 	:= $(patsubst %, $(SRC)/%.c, $(PRODUCT))
 SRCS 	:= $(filter-out $(MAINS), $(SRCS))
 OBJS 	:= $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 
+# Image Parameters for testing
 X 	:= -x -0.235125
 Y 	:= -y  0.827215
 SCALE 	:= -s  0.000004
@@ -29,7 +30,7 @@ PARAMS 	:=  $(X) $(Y) $(SCALE) $(ITERS) $(WIDTH) $(HEIGHT) $(OUTPUT)
 all: mkdirs $(PRODUCT)
 
 test: all $(TESTS)
-	./$(BIN)/mandel $(PARAMS) $(THREADS)
+	./$(BIN)/mandel $(PARAMS) -n $(THREADS)
 	./$(BIN)/mandelseries $(PARAMS) $(CHILDREN)
 .PHONY: test
 

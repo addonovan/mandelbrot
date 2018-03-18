@@ -77,12 +77,16 @@ int main( int argc, char *argv[] )
   // For each command line argument given,
   // override the appropriate configuration value.
 
-  while( ( c = getopt( argc, argv, "x:y:s:W:H:m:o:hw" ) ) != -1 ) 
+  while( ( c = getopt( argc, argv, "n:x:y:s:W:H:m:o:hw" ) ) != -1 ) 
   {
     switch( c )
     {
       case 'w':
         work_stealing = true;
+        break;
+
+      case 'n':
+        thread_count = atoi( optarg );
         break;
 
       case 'x':
@@ -118,12 +122,6 @@ int main( int argc, char *argv[] )
         exit( 0 );
         return 0;
     }
-  }
-
-  int i;
-  for ( i = optind; i < argc; i++ )
-  {
-    thread_count = atoi( argv[ i ] );
   }
 
   // Display the configuration of the image.
@@ -163,6 +161,7 @@ int main( int argc, char *argv[] )
   work_pool_index = work_size - 1; // work from the back to the front
 
   int start_row = 0;
+  int i;
   for ( i = 0; i < work_size; i++ )
   {
     work_pool[ i ].params = &params;
@@ -308,18 +307,21 @@ int iteration_to_color( int i, int max )
 
 void show_help()
 {
-  printf( "Use: mandel [options] <thread_count>\n" );
-  printf( "Where thread_count is the number of processes to run at one time\n" );
+  printf( "Use: mandel [options]\n" );
   printf( "\n" );
   printf( "Where options are:\n" );
-  printf( "-m <max>    The maximum number of iterations per point. (default=1000)\n" );
-  printf( "-x <coord>  X coordinate of image center point. (default=0)\n" );
-  printf( "-y <coord>  Y coordinate of image center point. (default=0)\n" );
-  printf( "-s <scale>  Scale of the image in Mandlebrot coordinates. (default=4)\n ");
-  printf( "-W <pixels> Width of the image in pixels. (default=500)\n ");
-  printf( "-H <pixels> Height of the image in pixels. (default=500)\n ");
-  printf( "-o <file>   Set output file. (default=mandel.bmp)\n ");
-  printf( "-h          Show this help text.\n ");
+  printf( "-m <max>     The maximum number of iterations per point. (default=1000)\n" );
+  printf( "-x <coord>   X coordinate of image center point. (default=0)\n" );
+  printf( "-y <coord>   Y coordinate of image center point. (default=0)\n" );
+  printf( "-s <scale>   Scale of the image in Mandlebrot coordinates. (default=4)\n ");
+  printf( "-W <pixels>  Width of the image in pixels. (default=500)\n ");
+  printf( "-H <pixels>  Height of the image in pixels. (default=500)\n ");
+  printf( "-o <file>    Set output file. (default=mandel.bmp)\n ");
+  printf( "-n <threads> Sets the number of threads to run at one time (default=1)\n" );
+  printf( "-w           Uses a work-stealing algorithm where each thread will grab\n" );
+  printf( "             will grab an unprocessed row from a common pool until the\n" );
+  printf( "             image has been finished\n" );
+  printf( "-h           Show this help text.\n ");
   printf( "\n" );
   printf( "Some examples are:\n" );
   printf( "mandel -x -0.5 -y -0.5 -s 0.2\n" );
