@@ -180,7 +180,6 @@ void spawn_children( options_t options )
     }
 
     // => we're in the parent, so continue dispatching new images
-    printf( "#%d @ s = %lf\n", remaining, scale );
     scale -= step;
     active++;
 
