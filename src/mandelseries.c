@@ -106,28 +106,25 @@ int main( int argc, char *argv[] )
 
       case 'h':
         show_help();
-        exit( 0 );
         return 0;
     }
   }
 
-  if ( argv[ optind ] == NULL ) 
+  int i;
+  for ( i = optind; i < argc; i++ )
   {
-    printf( "No process count specified\n\n" );
-    show_help();
-    exit( 1 );
-    return 1;
+    options.process_count = atoi( argv[ i ] );
   }
-  options.process_count = atoi( argv[ optind ] );
 
   // Display the configuration of the image.
   printf( 
-      "mandel: x=%lf y=%lf scale=%lf max=%d outfile=%s\n", 
+      "mandel: x=%lf y=%lf scale=%lf max=%d outfile=%s processes=%d\n", 
       options.x_center,
       options.y_center,
       options.scale,
       options.max,
-      options.file_name
+      options.file_name,
+      options.process_count
   );
 
   // take everything before the extension in the file name, then create a new
