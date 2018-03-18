@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdbool.h>
+#include <coloring.h>
 
 //
 // Definitions
@@ -291,18 +292,6 @@ int iterations_at_point( double x, double y, int max )
   }
 
   return iteration_to_color( iter, max );
-}
-
-/*
-Convert a iteration number to an RGBA color.
-Here, we just scale to gray with a maximum of imax.
-Modify this function to make more interesting colors.
-*/
-
-int iteration_to_color( int i, int max )
-{
-  int gray = 255 * i / max;
-  return MAKE_RGBA( gray, gray, gray, 0 );
 }
 
 void show_help()

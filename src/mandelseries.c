@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <coloring.h>
 
 typedef struct
 {
@@ -39,14 +40,9 @@ typedef struct
 }
 mandelbrot_t;
 
-int iteration_to_color( int i, int max );
-
 int iterations_at_point( double x, double y, int max );
-
 void spawn_children( options_t options );
-
 void mandelbrot_compute( mandelbrot_t* this );
-
 void show_help();
 
 //
@@ -271,18 +267,6 @@ int iterations_at_point( double x, double y, int max )
   }
 
   return iteration_to_color( iter, max );
-}
-
-/*
-Convert a iteration number to an RGBA color.
-Here, we just scale to gray with a maximum of imax.
-Modify this function to make more interesting colors.
-*/
-
-int iteration_to_color( int i, int max )
-{
-  int gray = 255 * i / max;
-  return MAKE_RGBA( gray, gray, gray, 0 );
 }
 
 void show_help()
