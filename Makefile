@@ -19,7 +19,7 @@ OBJS 	:= $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 # Image Parameters for testing
 X 	:= -x -0.235125
 Y 	:= -y  0.827215
-SCALE 	:= -s  0.00000004
+SCALE 	:= -s  0.000004
 ITERS 	:= -m 1000
 WIDTH 	:= -W 1024
 HEIGHT 	:= -H 1024
