@@ -41,17 +41,30 @@ tests: mkdirs $(TESTS)
 
 tmandel: timing $(TESTS)
 	@echo "Params: $(PARAMS)"
-	@./$(BIN)/mandel $(PARAMS) -n  1 > /dev/null
-	@./$(BIN)/mandel $(PARAMS) -n  2 > /dev/null
-	@./$(BIN)/mandel $(PARAMS) -n  3 > /dev/null
-	@./$(BIN)/mandel $(PARAMS) -n  4 > /dev/null
-	@./$(BIN)/mandel $(PARAMS) -n  5 > /dev/null
-	@./$(BIN)/mandel $(PARAMS) -n 10 > /dev/null
-	@./$(BIN)/mandel $(PARAMS) -n 50 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n   1 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n   2 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n   3 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n   4 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n   5 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n  10 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n  50 > /dev/null
 .PHONY: tmandel
 
+time_a: PARAMS = -x -0.5 -y 0.5 -s 1 -m 2000
+time_a: tmandel
+.PHONY: time_a
+
+time_b: PARAMS = -x 0.2869325 -y 0.0142905 -s 0.000001 -W 1024 -H 1024 -m 1000
+time_b: tmandel
+.PHONY: time_b
+
 tseries: timing $(TESTS)
-	./$(BIN)/mandelseries $(PARAMS) $(CHILDREN) > /dev/null
+	./$(BIN)/mandelseries $(PARAMS)  1 > /dev/null
+	./$(BIN)/mandelseries $(PARAMS)  2 > /dev/null
+	./$(BIN)/mandelseries $(PARAMS)  3 > /dev/null
+	./$(BIN)/mandelseries $(PARAMS)  4 > /dev/null
+	./$(BIN)/mandelseries $(PARAMS)  5 > /dev/null
+	./$(BIN)/mandelseries $(PARAMS) 10 > /dev/null
 .PHONY: tseries
 
 ################################################################################

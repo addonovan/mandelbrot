@@ -64,9 +64,9 @@ int main( int argc, char* argv[] )
 
   clock_gettime( CLOCK_MONOTONIC, &end );
 
-  fprintf( stderr, "elapsed time = %lu ns\n", 
-      ( ( end.tv_sec - start.tv_sec ) * 1000000000 ) +
-      ( start.tv_nsec - end.tv_nsec )
+  fprintf( stderr, "%lu\n", 
+      ( ( end.tv_sec - start.tv_sec ) * 1000 * 1000 * 1000 ) +
+      ( end.tv_nsec - start.tv_nsec )
   );
 
 #endif

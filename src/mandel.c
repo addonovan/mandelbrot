@@ -88,7 +88,7 @@ int main( int argc, char* argv[] )
     }
   }
   
-  fprintf( stderr, "best time = %lu ns\n", best );
+  fprintf( stderr, "%lu\n", best );
 
 #endif
 
