@@ -30,9 +30,6 @@ PARAMS 	:=  $(X) $(Y) $(SCALE) $(ITERS) $(WIDTH) $(HEIGHT) $(OUTPUT)
 
 all: mkdirs $(PRODUCT)
 
-workstealing: PARAMS += -w
-.PHONY: workstealing
-
 timing: CFLAGS += -DTIMING
 timing: mkdirs $(PRODUCT)
 .PHONY: timing
@@ -43,6 +40,7 @@ tests: mkdirs $(TESTS)
 .PHONY: tests
 
 tmandel: timing $(TESTS)
+	@echo "Params: $(PARAMS)"
 	@./$(BIN)/mandel $(PARAMS) -n  1 > /dev/null
 	@./$(BIN)/mandel $(PARAMS) -n  2 > /dev/null
 	@./$(BIN)/mandel $(PARAMS) -n  3 > /dev/null
