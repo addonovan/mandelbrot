@@ -9,7 +9,7 @@ INC 	:= include
 CC	:= gcc
 INCDIRS := -I$(INC)
 CFLAGS	:= -Wall -Wextra -Werror -g
-LIBS	:= -pthread -lm
+LIBS	:= -pthread -lm -lrt
 
 SRCS 	:= $(wildcard $(SRC)/*.c)
 MAINS 	:= $(patsubst %, $(SRC)/%.c, $(PRODUCT))
@@ -50,11 +50,11 @@ tmandel: timing $(TESTS)
 	@./$(BIN)/mandel $(PARAMS) -n  50 > /dev/null
 .PHONY: tmandel
 
-time_a: PARAMS = -x -0.5 -y 0.5 -s 1 -m 2000
+time_a: PARAMS = -x -0.5 -y 0.5 -s 1 -m 2000 -o out/mandel.bmp
 time_a: tmandel
 .PHONY: time_a
 
-time_b: PARAMS = -x 0.2869325 -y 0.0142905 -s 0.000001 -W 1024 -H 1024 -m 1000
+time_b: PARAMS = -x 0.2869325 -y 0.0142905 -s 0.000001 -W 1024 -H 1024 -m 1000 -o out/mandel.bmp
 time_b: tmandel
 .PHONY: time_b
 

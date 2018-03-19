@@ -11,6 +11,7 @@
 #include <pthread.h>
 #include <stdbool.h>
 #include <coloring.h>
+#include <time.h>
 
 //
 // Definitions
