@@ -54,12 +54,48 @@ int iteration_to_color( int i, int max );
 int iterations_at_point( double x, double y, int max );
 void* mandelbrot_compute( void* );
 void show_help();
+int execute( int argc, char* argv[] );
 
 //
 // Implementations
 //
 
-int main( int argc, char *argv[] )
+int main( int argc, char* argv[] )
+{
+#ifndef TIMING
+  execute( argc, argv );
+#else
+
+  unsigned long best = 0;
+
+  int i;
+  for ( i = 0; i < 5; i++ )
+  {
+    struct timespec start, end;
+    clock_gettime( CLOCK_MONOTONIC, &start );
+
+    execute( argc, argv );
+
+    clock_gettime( CLOCK_MONOTONIC, &end );
+
+    unsigned long nanos = 
+      ( ( end.tv_sec - start.tv_sec ) * 1000 * 1000 * 1000 ) +
+      ( end.tv_nsec - start.tv_nsec );
+
+    if ( i == 0 || nanos > best )
+    {
+      best = nanos;
+    }
+  }
+  
+  fprintf( stderr, "best time = %lu ns\n", best );
+
+#endif
+
+  return 0;
+}
+
+int execute( int argc, char* argv[] )
 {
   char c;
 

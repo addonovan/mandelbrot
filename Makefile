@@ -19,21 +19,42 @@ OBJS 	:= $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 # Image Parameters for testing
 X 	:= -x -0.235125
 Y 	:= -y  0.827215
-SCALE 	:= -s  0.000004
+SCALE 	:= -s  0.00000004
 ITERS 	:= -m 1000
 WIDTH 	:= -W 1024
 HEIGHT 	:= -H 1024
 OUTPUT 	:= -o $(OUT)/mandel.bmp
-THREADS := 4
+THREADS := -n 4
 CHILDREN:= 4
 PARAMS 	:=  $(X) $(Y) $(SCALE) $(ITERS) $(WIDTH) $(HEIGHT) $(OUTPUT)
 
 all: mkdirs $(PRODUCT)
 
-test: all $(TESTS)
-	./$(BIN)/mandel $(PARAMS) -n $(THREADS)
+workstealing: PARAMS += -w
+.PHONY: workstealing
+
+timing: CFLAGS += -DTIMING
+timing: mkdirs $(PRODUCT)
+.PHONY: timing
+
+tests: mkdirs $(TESTS)
+	./$(BIN)/mandel $(PARAMS) $(THREADS)
 	./$(BIN)/mandelseries $(PARAMS) $(CHILDREN)
-.PHONY: test
+.PHONY: tests
+
+tmandel: timing $(TESTS)
+	@./$(BIN)/mandel $(PARAMS) -n  1 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n  2 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n  3 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n  4 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n  5 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n 10 > /dev/null
+	@./$(BIN)/mandel $(PARAMS) -n 50 > /dev/null
+.PHONY: tmandel
+
+tseries: timing $(TESTS)
+	./$(BIN)/mandelseries $(PARAMS) $(CHILDREN) > /dev/null
+.PHONY: tseries
 
 ################################################################################
 # EXECUTABLES                                                                  #

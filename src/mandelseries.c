@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <coloring.h>
+#include <time.h>
 
 typedef struct
 {
@@ -44,12 +45,36 @@ int iterations_at_point( double x, double y, int max );
 void spawn_children( options_t options );
 void mandelbrot_compute( mandelbrot_t* this );
 void show_help();
+int execute( int argc, char* argv[] );
 
 //
 // Implementations
 //
 
-int main( int argc, char *argv[] )
+int main( int argc, char* argv[] )
+{
+#ifndef TIMING
+  execute( argc, argv );
+#else
+
+  struct timespec start, end;
+  clock_gettime( CLOCK_MONOTONIC, &start );
+
+  execute( argc, argv );
+
+  clock_gettime( CLOCK_MONOTONIC, &end );
+
+  fprintf( stderr, "elapsed time = %lu ns\n", 
+      ( ( end.tv_sec - start.tv_sec ) * 1000000000 ) +
+      ( start.tv_nsec - end.tv_nsec )
+  );
+
+#endif
+
+  return 0;
+}
+
+int execute( int argc, char* argv[] )
 {
   char c;
 
