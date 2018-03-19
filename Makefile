@@ -8,7 +8,8 @@ INC 	:= include
 
 CC	:= gcc
 INCDIRS := -I$(INC)
-CFLAGS	:= -Wall -Wextra -Werror -pthread -g
+CFLAGS	:= -Wall -Wextra -Werror -g
+LIBS	:= -pthread -lm
 
 SRCS 	:= $(wildcard $(SRC)/*.c)
 MAINS 	:= $(patsubst %, $(SRC)/%.c, $(PRODUCT))
@@ -39,7 +40,7 @@ test: all $(TESTS)
 ################################################################################
 
 $(PRODUCT): $(OBJS)
-	$(CC) $(CFLAGS) $(INCDIRS) $^ $(SRC)/$@.c -o $(BIN)/$@
+	$(CC) $(CFLAGS) $(INCDIRS) $^ $(SRC)/$@.c -o $(BIN)/$@ $(LIBS)
 
 ################################################################################
 # SHARED OBJECTS                                                               #
