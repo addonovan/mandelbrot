@@ -163,6 +163,7 @@ int execute( int argc, char* argv[] )
   }
 
   // Display the configuration of the image.
+#ifndef TIMING
   printf( 
       "mandel: x=%lf y=%lf scale=%lf max=%d outfile=%s threads=%d %s\n", 
       x_center,
@@ -173,6 +174,7 @@ int execute( int argc, char* argv[] )
       thread_count,
       ( work_stealing ? "(work stealing)" : "" )
   );
+#endif
 
   // create the generic params struct
   image_params_t params = {
