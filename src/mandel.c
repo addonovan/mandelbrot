@@ -263,14 +263,25 @@ void* mandelbrot_compute( void* _ )
   const work_t* work = NULL;
 
   // each thread will stay alive until there's no more work for it to do
-  while ( work_pool_index >= 0 )
+  while ( true ) 
   {
     // get the next work item from the pool
     {
+
+      work = NULL;
+
+      // safely grab the next item from the work pool, then move
+      // the pointer down one
       pthread_mutex_lock( &m_work_pool ); 
-      work = work_pool + work_pool_index;
-      work_pool_index--;
+      if ( work_pool_index >= 0 )
+      {
+        work = work_pool + work_pool_index;
+        work_pool_index--;
+      }
       pthread_mutex_unlock( &m_work_pool );
+
+      // the loop ends when we couldn't find any more work
+      if ( work == NULL ) break;
     }
 
     int i, j;
