@@ -137,6 +137,7 @@ int execute( int argc, char* argv[] )
     options.process_count = atoi( argv[ i ] );
   }
 
+#ifndef TIMING
   // Display the configuration of the image.
   printf( 
       "mandel: x=%lf y=%lf scale=%lf max=%d outfile=%s processes=%d\n", 
@@ -147,6 +148,7 @@ int execute( int argc, char* argv[] )
       options.file_name,
       options.process_count
   );
+#endif
 
   // take everything before the extension in the file name, then create a new
   // format string from that
